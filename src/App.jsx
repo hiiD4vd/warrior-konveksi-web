@@ -5,6 +5,7 @@ import TrustBanner from './components/TrustBanner';
 import AboutCapacity from './components/AboutCapacity';
 import Services from './components/Services';
 import FooterContact from './components/FooterContact';
+import HorizontalCarousel from "./components/HorizontalCarousel";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <TrustBanner />
       <AboutCapacity />
       <Services />
+      <HorizontalCarousel />
       <FooterContact />
     </div>
   );
