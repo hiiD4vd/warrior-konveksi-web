@@ -59,11 +59,6 @@ export default function HorizontalCarousel({ onProductSelect }) {
         </div>
       </div>
       
-      {/* 
-        Inline styling for the marquee keyframes.
-        This provides a continuous 0% to -100% translation, 
-        and since there are two identical tracks, the loop is perfectly seamless.
-      */}
       <style>{`
         @keyframes marquee {
           0% {
@@ -87,20 +82,17 @@ const CarouselItem = ({ item, onSelect }) => {
       onClick={() => onSelect && onSelect(item)}
       className="group/item relative h-[450px] w-[350px] flex-shrink-0 mx-4 cursor-pointer overflow-hidden rounded-xl bg-gray-200"
     >
-      {/* Image A (Default) */}
       <img 
         src={item.imageA} 
         alt={item.title} 
         className="absolute inset-0 h-full w-full object-cover transition-opacity duration-0 group-hover/item:opacity-0"
       />
-      {/* Image B (Hover - Instantly swaps due to duration-0) */}
       <img 
         src={item.imageB} 
         alt={`${item.title} alternate view`} 
         className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-0 group-hover/item:opacity-100"
       />
       
-      {/* Optional Gradient Text Overlay */}
       <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent translate-y-4 opacity-0 transition-all duration-300 group-hover/item:translate-y-0 group-hover/item:opacity-100">
         <h3 className="text-xl font-bold tracking-wide text-white uppercase">{item.title}</h3>
         <span className="text-sm text-gray-300 font-medium tracking-wider">Quick View</span>
