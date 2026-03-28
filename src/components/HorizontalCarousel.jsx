@@ -80,20 +80,21 @@ const CarouselItem = ({ item, onSelect }) => {
   return (
     <div 
       onClick={() => onSelect && onSelect(item)}
-      className="group/item relative h-[450px] w-[350px] flex-shrink-0 mx-4 cursor-pointer overflow-hidden rounded-xl bg-gray-200"
+      // Removed group/item since we are now relying on the parent container's "group" class
+      className="relative h-[450px] w-[350px] flex-shrink-0 mx-4 cursor-pointer overflow-hidden rounded-xl bg-gray-200"
     >
       <img 
         src={item.imageA} 
         alt={item.title} 
-        className="absolute inset-0 h-full w-full object-cover transition-opacity duration-0 group-hover/item:opacity-0"
+        className="absolute inset-0 h-full w-full object-cover transition-opacity duration-0 group-hover:opacity-0"
       />
       <img 
         src={item.imageB} 
         alt={`${item.title} alternate view`} 
-        className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-0 group-hover/item:opacity-100"
+        className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-0 group-hover:opacity-100"
       />
       
-      <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent translate-y-4 opacity-0 transition-all duration-300 group-hover/item:translate-y-0 group-hover/item:opacity-100">
+      <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
         <h3 className="text-xl font-bold tracking-wide text-white uppercase">{item.title}</h3>
         <span className="text-sm text-gray-300 font-medium tracking-wider">Quick View</span>
       </div>
