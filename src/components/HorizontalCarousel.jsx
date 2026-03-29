@@ -3,39 +3,63 @@ import React from 'react';
 const mockCarouselData = [
   {
     id: 1,
-    imageA: "https://images.unsplash.com/photo-1594938298598-70f70df85c22?q=80&w=800",
-    imageB: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800",
+    imageA: "/images/model (2).jpeg",
+    imageB: "/images/model (1).jpeg",
     title: "Item 1"
   },
   {
     id: 2,
-    imageA: "https://images.unsplash.com/photo-1606240298038-f9960ffbb70a?q=80&w=800",
-    imageB: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800",
+    imageA: "/images/model (4).jpeg",
+    imageB: "/images/model (3).jpeg",
     title: "Item 2"
   },
   {
     id: 3,
-    imageA: "https://images.unsplash.com/photo-1584516150909-c43483ee7932?q=80&w=800",
-    imageB: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=800",
+    imageA: "/images/model (6).jpeg",
+    imageB: "/images/model (5).jpeg",
     title: "Item 3"
   },
   {
     id: 4,
-    imageA: "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800",
-    imageB: "https://images.unsplash.com/photo-1550614000-4b95d4ebf04d?q=80&w=800",
+    imageA: "/images/model (8).jpeg",
+    imageB: "/images/model (7).jpeg",
     title: "Item 4"
   },
   {
     id: 5,
-    imageA: "https://images.unsplash.com/photo-1628157588553-5eeea00af15c?q=80&w=800",
-    imageB: "https://images.unsplash.com/photo-1485230895905-eb8b26117d69?q=80&w=800",
+    imageA: "/images/model (10).jpeg",
+    imageB: "/images/model (9).jpeg",
     title: "Item 5"
+  },
+  {
+    id: 6,
+    imageA: "/images/model (12).jpeg",
+    imageB: "/images/model (11).jpeg",
+    title: "Item 6"
+  },
+  {
+    id: 7,
+    imageA: "/images/model (13).jpeg",
+    imageB: "/images/model (14).jpeg",
+    title: "Item 7"
+  },
+  {
+    id: 8,
+    imageA: "/images/model (16).jpeg",
+    imageB: "/images/model (15).jpeg",
+    title: "Item 8"
+  },
+  {
+    id: 9,
+    imageA: "/images/model (18).jpeg",
+    imageB: "/images/model (17).jpeg",
+    title: "Item 9"
   }
 ];
 
 export default function HorizontalCarousel({ onProductSelect }) {
   return (
-    <section className="relative w-full overflow-hidden bg-[#f4f4f0] py-20 flex flex-col items-center">
+    <section className="relative w-full overflow-hidden bg-white py-20 flex flex-col items-center">
       <div className="mb-10 text-center">
         <h2 className="text-3xl font-bold uppercase tracking-widest text-[#1c1c1c]">Latest Collections</h2>
         <p className="text-gray-500 mt-2">Explore our newest arrivals</p>
@@ -81,7 +105,7 @@ const CarouselItem = ({ item, onSelect }) => {
     <div 
       onClick={() => onSelect && onSelect(item)}
       // Removed group/item since we are now relying on the parent container's "group" class
-      className="relative h-[450px] w-[350px] flex-shrink-0 mx-4 cursor-pointer overflow-hidden rounded-xl bg-gray-200"
+      className="relative h-[450px] w-[253px] flex-shrink-0 mx-2 cursor-pointer overflow-hidden rounded-xl bg-gray-200"
     >
       <img 
         src={item.imageA} 
