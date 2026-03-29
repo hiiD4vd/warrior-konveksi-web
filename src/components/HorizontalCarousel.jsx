@@ -1,63 +1,76 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 
 const mockCarouselData = [
   {
     id: 1,
-    imageA: "/images/model (2).jpeg",
-    imageB: "/images/model (1).jpeg",
+    imageA: "/images/model (2).png",
+    imageB: "/images/model (1).png",
     title: "Item 1"
   },
   {
     id: 2,
-    imageA: "/images/model (4).jpeg",
-    imageB: "/images/model (3).jpeg",
+    imageA: "/images/model (4).png",
+    imageB: "/images/model (3).png",
     title: "Item 2"
   },
   {
     id: 3,
-    imageA: "/images/model (6).jpeg",
-    imageB: "/images/model (5).jpeg",
+    imageA: "/images/model (6).png",
+    imageB: "/images/model (5).png",
     title: "Item 3"
   },
   {
     id: 4,
-    imageA: "/images/model (8).jpeg",
-    imageB: "/images/model (7).jpeg",
+    imageA: "/images/model (8).png",
+    imageB: "/images/model (7).png",
     title: "Item 4"
   },
   {
     id: 5,
-    imageA: "/images/model (10).jpeg",
-    imageB: "/images/model (9).jpeg",
+    imageA: "/images/model (10).png",
+    imageB: "/images/model (9).png",
     title: "Item 5"
   },
   {
     id: 6,
-    imageA: "/images/model (12).jpeg",
-    imageB: "/images/model (11).jpeg",
+    imageA: "/images/model (12).png",
+    imageB: "/images/model (11).png",
     title: "Item 6"
   },
   {
     id: 7,
-    imageA: "/images/model (13).jpeg",
-    imageB: "/images/model (14).jpeg",
+    imageA: "/images/model (13).png",
+    imageB: "/images/model (14).png",
     title: "Item 7"
   },
   {
     id: 8,
-    imageA: "/images/model (16).jpeg",
-    imageB: "/images/model (15).jpeg",
+    imageA: "/images/model (16).png",
+    imageB: "/images/model (15).png",
     title: "Item 8"
   },
   {
     id: 9,
-    imageA: "/images/model (18).jpeg",
-    imageB: "/images/model (17).jpeg",
+    imageA: "/images/model (18).png",
+    imageB: "/images/model (17).png",
     title: "Item 9"
   }
 ];
 
 export default function HorizontalCarousel({ onProductSelect }) {
+  const [hoveredItemText, setHoveredItemText] = useState(null);
+  const cursorRef = useRef(null);
+  const [isHoveringContainer, setIsHoveringContainer] = useState(false);
+
+  const handleMouseMove = (e) => {
+    if (cursorRef.current) {
+      // Adding a slight offset to position the cursor text correctly relative to the pointer
+      const x = e.clientX + 15;
+      const y = e.clientY + 15;
+      cursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    }
+  };
+
   return (
     <section className="relative w-full overflow-hidden bg-white py-20 flex flex-col items-center">
       <div className="mb-10 text-center">
@@ -66,19 +79,49 @@ export default function HorizontalCarousel({ onProductSelect }) {
       </div>
 
       {/* Overflow container */}
-      <div className="relative w-full max-w-[100vw] overflow-hidden flex group">
+      <div 
+        className="relative w-full max-w-[100vw] overflow-hidden flex group carousel-container pb-8"
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHoveringContainer(true)}
+        onMouseLeave={() => {
+          setIsHoveringContainer(false);
+          setHoveredItemText(null);
+        }}
+      >
+        {/* Floating Cursor Tracker */}
+        {isHoveringContainer && hoveredItemText && (
+          <div 
+            ref={cursorRef}
+            className="fixed top-0 left-0 pointer-events-none z-50 bg-[#111] text-white px-4 py-1.5 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.25em] rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] flex items-center justify-center whitespace-nowrap"
+            style={{ 
+              willChange: 'transform'
+            }}
+          >
+            {hoveredItemText}
+          </div>
+        )}
         
         {/* Track 1 */}
         <div className="flex flex-shrink-0 animate-marquee group-hover:[animation-play-state:paused]">
           {mockCarouselData.map((item) => (
-            <CarouselItem key={`first-${item.id}`} item={item} onSelect={onProductSelect} />
+            <CarouselItem 
+              key={`first-${item.id}`} 
+              item={item} 
+              onSelect={onProductSelect} 
+              onHoverChange={setHoveredItemText}
+            />
           ))}
         </div>
         
         {/* Track 2 (Clone for infinite loop effect) */}
         <div className="flex flex-shrink-0 animate-marquee group-hover:[animation-play-state:paused]" aria-hidden="true">
           {mockCarouselData.map((item) => (
-            <CarouselItem key={`second-${item.id}`} item={item} onSelect={onProductSelect} />
+            <CarouselItem 
+              key={`second-${item.id}`} 
+              item={item} 
+              onSelect={onProductSelect}
+              onHoverChange={setHoveredItemText}
+            />
           ))}
         </div>
       </div>
@@ -100,28 +143,24 @@ export default function HorizontalCarousel({ onProductSelect }) {
   );
 }
 
-const CarouselItem = ({ item, onSelect }) => {
+const CarouselItem = ({ item, onSelect, onHoverChange }) => {
   return (
     <div 
       onClick={() => onSelect && onSelect(item)}
-      // Removed group/item since we are now relying on the parent container's "group" class
-      className="relative h-[450px] w-[253px] flex-shrink-0 mx-2 cursor-pointer overflow-hidden rounded-xl bg-gray-200"
+      onMouseEnter={() => onHoverChange(item.title)}
+      onMouseLeave={() => onHoverChange(null)}
+      className="relative h-[450px] w-[253px] flex-shrink-0 mx-2 cursor-pointer overflow-hidden rounded-xl bg-transparent transition-transform duration-300 hover:scale-[1.02]"
     >
       <img 
         src={item.imageA} 
         alt={item.title} 
-        className="absolute inset-0 h-full w-full object-cover transition-opacity duration-0 group-hover:opacity-0"
+        className="absolute inset-0 h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-0"
       />
       <img 
         src={item.imageB} 
         alt={`${item.title} alternate view`} 
-        className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-0 group-hover:opacity-100"
+        className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
       />
-      
-      <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-        <h3 className="text-xl font-bold tracking-wide text-white uppercase">{item.title}</h3>
-        <span className="text-sm text-gray-300 font-medium tracking-wider">Quick View</span>
-      </div>
     </div>
   );
 };
